@@ -1,0 +1,89 @@
+INSERT INTO provincia VALUES(17, 'Pichincha', 'Activo');
+INSERT INTO provincia VALUES(05, 'Cotopaxi', 'Activo');
+INSERT INTO provincia VALUES(10, 'Imbabura', 'Activo');
+INSERT INTO provincia VALUES(04, 'Carchi', 'Activo');
+INSERT INTO provincia VALUES(06, 'Chimborazo', 'Activo');
+
+INSERT INTO canton VALUES(01, 'Quito', 'Activo', 17 );
+INSERT INTO canton VALUES(02, 'Latacunga', 'Activo', 05);
+INSERT INTO canton VALUES(03, 'Ibara', 'Activo', 10 );
+INSERT INTO canton VALUES(04, 'Tulcan', 'Activo', 04 );
+INSERT INTO canton VALUES(05, 'Riobamba', 'Activo', 06 );
+
+INSERT INTO parroquia VALUES(01, 'Calderon', 'Activo', 01);
+INSERT INTO parroquia VALUES(02, 'El Quinche', 'Activo', 01);
+INSERT INTO parroquia VALUES(03, 'Conocoto', 'Activo', 01);
+INSERT INTO parroquia VALUES(04, 'Belisario Quevedo', 'Activo', 02);
+INSERT INTO parroquia VALUES(05, 'Caranqui', 'Activo', 03);
+INSERT INTO parroquia VALUES(06, 'Gonzales Suarez', 'Activo', 04);
+INSERT INTO parroquia VALUES(07, 'Maldonado', 'Activo', 05);
+
+
+INSERT INTO calle_principal VALUES(01, 'Av. Simon Bolivar', 01);
+INSERT INTO calle_principal VALUES(02, 'Julio Matovelle', 02);
+INSERT INTO calle_principal VALUES(03, 'Enriquez S', 03);
+INSERT INTO calle_principal VALUES(04, 'Av. Quevedo', 04);
+INSERT INTO calle_principal VALUES(05, 'Av. Ibarra', 05);
+INSERT INTO calle_principal VALUES(06, 'Av. Amazonas', 06);
+INSERT INTO calle_principal VALUES(07, 'Av. Galo Plaza', 07);
+
+INSERT INTO coordenadas VALUES(01, '0°06 49 S', '78°28 27 W', 01);
+INSERT INTO coordenadas VALUES(02, '0°06 17 S', '78°29 51 W', 01);
+INSERT INTO coordenadas VALUES(03, '0°04 21 S', '78°28 28 W', 02);
+INSERT INTO coordenadas VALUES(04, '0°06 35 S', '78°27 28 W', 03);
+INSERT INTO coordenadas VALUES(05, '0°12 41 S', '78°26 26 W', 04);
+INSERT INTO coordenadas VALUES(06, '0°07 20 S', '78°24 48 W', 05);
+INSERT INTO coordenadas VALUES(07, '0°10 13 S', '78°32 36 W', 06);
+INSERT INTO coordenadas VALUES(08, '0°16 16 S', '78°33 36 W', 07);
+
+INSERT INTO persona VALUES(1716992142, 'Carlos', 'Pogo', 'cpogo@gmail.com', '0968745126', 01);
+INSERT INTO persona VALUES(1752779429, 'Anthony', 'Quishpe', 'aquishpe@gmail.com', '0958709216', 02);
+INSERT INTO persona VALUES(1716458932, 'Nayeli', 'Tipantiza', 'ntipantiza@gmail.com', '0954789632', 03);
+INSERT INTO persona VALUES(1717099590, 'Elian', 'Castro', 'ecastro@gmail.com', '0968747895', 04);
+
+INSERT INTO persona VALUES(1715984635, 'Diego', 'Cadena', 'dcadena@gmail.com', '0968457963', 05);
+INSERT INTO persona VALUES(1712598634, 'Kevin', 'Topon', 'ktopon@gmail.com', '0957946832', 06);
+INSERT INTO persona VALUES(1789456893, 'Jhonatan', 'Ayo', 'jayo@gmail.com', '0945698712', 07);
+INSERT INTO persona VALUES(1718965313, 'David', 'Salazar', 'dsalarzar@gmail.com', '0947598362', 08);
+
+INSERT INTO cliente VALUES(01, 'Activa', 1716992142);
+INSERT INTO cliente VALUES(02, 'Inactiva', 1752779429);
+INSERT INTO cliente VALUES(03, 'Inactiva', 1717099590);
+INSERT INTO cliente VALUES(04, 'Activa', 1716458932);
+
+INSERT INTO conductor VALUES(01, 'Activo', 1715984635);
+INSERT INTO conductor VALUES(02, 'Activa', 1712598634);
+INSERT INTO conductor VALUES(03, 'Activa', 1789456893);
+INSERT INTO conductor VALUES(04, 'Inactivo', 1718965313);
+
+INSERT INTO vehiculo VALUES(01, 'PBS-0456', 'Chevrolet', 'Negro', 1715984635);
+INSERT INTO vehiculo VALUES(02, 'PAD-1476', 'Mazda', 'Gris', 1712598634);
+INSERT INTO vehiculo VALUES(03, 'PDA-2146', 'Renault', 'Gris', 1789456893);
+INSERT INTO vehiculo VALUES(04, 'PBL-4897', 'Audi', 'Azul', 1718965313);
+
+INSERT INTO destino VALUES(01, 01);
+INSERT INTO destino VALUES(02, 02);
+INSERT INTO destino VALUES(03, 03);
+INSERT INTO destino VALUES(04, 04);
+INSERT INTO destino VALUES(05, 05);
+INSERT INTO destino VALUES(06, 06);
+INSERT INTO destino VALUES(07, 07);
+INSERT INTO destino VALUES(08, 08);
+
+INSERT INTO tarifa VALUES(01, 'Efectivo', 'Pagado');
+INSERT INTO tarifa VALUES(02, 'Efectivo', 'Pagado');
+INSERT INTO tarifa VALUES(03, 'Tarjeta', 'Pendiente');
+INSERT INTO tarifa VALUES(04, 'Efectivo', 'Pagado');
+INSERT INTO tarifa VALUES(05, 'Tarjeta', 'Pendiente');
+INSERT INTO tarifa VALUES(06, 'Efectivo', 'Pagado');
+INSERT INTO tarifa VALUES(07, 'Tarjeta', 'Pendiente');
+INSERT INTO tarifa VALUES(08, 'Efectivo', 'Pagado');
+
+INSERT INTO servicio VALUES(01, 'Encomienda', 01);
+INSERT INTO servicio VALUES(02, 'Comida', 02);
+INSERT INTO servicio VALUES(03, 'Viaje', 03);
+
+INSERT INTO pedido VALUES(1715984635 , 1716992142, 01, 7.50, '2022-12-14',02);
+INSERT INTO pedido VALUES(1712598634 , 1752779429, 02, 5.80, '2023-01-07',03);
+INSERT INTO pedido VALUES(1789456893 , 1717099590, 03, 2.50, '2023-01-05',04);
+INSERT INTO pedido VALUES(1718965313 , 1716458932, 02, 3.50, '2022-12-20',05);

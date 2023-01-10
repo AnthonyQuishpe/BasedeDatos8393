@@ -1,0 +1,123 @@
+.open 
+.databases
+.header on
+.mode column
+.mode box
+
+CREATE TABLE provincia
+    ( provincia_id INTEGER PRIMARY KEY AUTOINCREMENT,
+      provincia_nombre VARCHAR(20),
+      provincia_status VARCHAR(20)
+      );
+
+CREATE TABLE canton
+    ( canton_id INTEGER PRIMARY KEY AUTOINCREMENT,
+      canton_nombre VARCHAR(20),
+      canton_status VARCHAR(20),
+      provincia_id INTEGER NOT NULL,
+      FOREIGN KEY (provincia_id) REFERENCES provincia(provincia_id)
+      );
+
+
+CREATE TABLE parroquia
+    ( parroquia_id INTEGER PRIMARY KEY AUTOINCREMENT,
+      parroquia_nombre VARCHAR(20),
+      parroquia_status VARCHAR(20),
+      canton_id INTEGER NOT NULL,
+	provincia_id INTEGER NOT NULL,
+      FOREIGN KEY (canton_id) REFERENCES canton(canton_id),
+	FOREIGN KEY (provincia_id) REFERENCES provincia(provincia_id)
+      );
+
+CREATE TABLE calle_principal
+    ( calle_principal_id INTEGER PRIMARY KEY AUTOINCREMENT,
+      calle_principal_nombre VARCHAR(20),
+      parroquia_id INTEGER NOT NULL,
+      canton_id INTEGER NOT NULL,
+	provincia_id INTEGER NOT NULL,
+      FOREIGN KEY (parroquia_id) REFERENCES parroquia(parroquia_id),
+      FOREIGN KEY (canton_id) REFERENCES canton(canton_id),
+	FOREIGN KEY (provincia_id) REFERENCES provincia(provincia_id)
+      );
+
+CREATE TABLE coordenadas
+    ( coordenadas_id INTEGER PRIMARY KEY AUTOINCREMENT,
+      coordenadas_latitud VARCHAR(20),
+      coordenadas_longitud VARCHAR(20),
+      calle_principal_id INTEGER NOT NULL,
+      parroquia_id INTEGER NOT NULL,
+      canton_id INTEGER NOT NULL,
+	provincia_id INTEGER NOT NULL,
+      FOREIGN KEY (calle_principal_id) REFERENCES calle_principal(calle_principal_id),
+      FOREIGN KEY (parroquia_id) REFERENCES parroquia(parroquia_id),
+      FOREIGN KEY (canton_id) REFERENCES canton(canton_id),
+	FOREIGN KEY (provincia_id) REFERENCES provincia(provincia_id)
+      );      
+
+CREATE TABLE persona
+    ( persona_id INTEGER PRIMARY KEY AUTOINCREMENT,
+      persona_nombre VARCHAR(20) NOT NULL,
+      persona_apellido VARCHAR(20) NOT NULL,
+      persona_email VARCHAR(60) NOT NULL,
+      persona_celular VARCHAR(60) NOT NULL,
+      direccion INTEGER,
+      FOREIGN KEY (direccion) REFERENCES coordenadas(coordenadas_id)
+      );
+
+CREATE TABLE cliente
+    ( cliente_membresia INTEGER PRIMARY KEY AUTOINCREMENT,
+	cliente_status VARCHAR(50) NOT NULL,
+      persona_cliente_id INTEGER,
+      FOREIGN KEY (persona_cliente_id) REFERENCES persona(persona_id)
+      );
+
+CREATE TABLE conductor
+    ( conductor_licencia INTEGER PRIMARY KEY AUTOINCREMENT,
+	conductor_status VARCHAR(50) NOT NULL,
+      persona_conductor_id INTEGER NOT NULL,
+      FOREIGN KEY (persona_conductor_id) REFERENCES persona(persona_id)
+      );
+
+CREATE TABLE vehiculo
+    ( num_vehiculo INTEGER PRIMARY KEY AUTOINCREMENT,
+	vehiculo_placa VARCHAR(20) NOT NULL,
+      vehiculo_marca VARCHAR(20) NOT NULL,
+      vehiculo_color VARCHAR(20) NOT NULL,
+      persona_conductor_id INTEGER NOT NULL,
+      FOREIGN KEY (persona_conductor_id) REFERENCES conductor(persona_conductor_id )
+      );
+
+
+CREATE TABLE pedido
+    ( pedido_id INTEGER PRIMARY KEY AUTOINCREMENT,
+	persona_conductor_id INTEGER NOT NULL,
+      persona_cliente_id INTEGER NOT NULL,
+      servicio_id INTEGER NOT NULL,
+      pedido_precio FLOAT NOT NULL,
+      pedido_date DATETIME NOT NULL,
+	ubicacion VARCHAR(20) NOT NULL,
+      FOREIGN KEY (persona_conductor_id) REFERENCES conductor(persona_conductor_id),
+      FOREIGN KEY (persona_cliente_id) REFERENCES cliente(persona_cliente_id),
+      FOREIGN KEY (servicio_id) REFERENCES servicio(servicio_id),
+	FOREIGN KEY (ubicacion) REFERENCES coordenadas(coordenadas_id)
+      );
+
+CREATE TABLE servicio
+    ( servicio_id INTEGER PRIMARY KEY AUTOINCREMENT,
+      servicio_nombre VARCHAR(20) NOT NULL,
+      destino_id INTEGER NOT NULL, 
+      FOREIGN KEY (destino_id) REFERENCES tarifa(destino_id)
+      );
+
+CREATE TABLE tarifa
+    ( destino_id INTEGER NOT NULL,
+      tarifa_forma_pago VARCHAR(20) NOT NULL,
+      tarifa_status VARCHAR(20) NOT NULL,
+      CONSTRAINT fk_tarifa PRIMARY KEY (destino_id),
+      FOREIGN KEY (destino_id) REFERENCES destino(destino_id)
+      );
+
+CREATE TABLE destino
+    ( destino_id INTEGER PRIMARY KEY AUTOINCREMENT,
+      coordenadas_id INTEGER NOT NULL
+      );

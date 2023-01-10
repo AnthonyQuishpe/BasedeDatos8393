@@ -1,0 +1,190 @@
+EJERCICIO 1
+
+consultar cuantos pedidos ha hecho un cliente y mostrar el nombre del servicio,
+listar el id y nombre del cliente, numero de pedidos y el nombre del servicio.
+
+select per.persona_id as Cliente,
+	per.persona_nombre as Nombre,
+	count(ped.persona_cliente_id),
+	ser.servicio_nombre as NombreServicio
+from persona per
+inner join cliente cli on per.persona_id=cli.persona_cliente_id
+inner join pedido ped on cli.persona_cliente_id=ped.persona_cliente_id
+inner join servicio ser on ped.servicio_id=ser.servicio_id
+group by per.persona_id;
+
+EJERCICIO 2
+
+Crear una consulta en donde calcule el total del precio de cada 
+pedido por cada cliente
+
+select per.persona_id as Cliente,
+	per.persona_nombre as Nombre,
+	count(ped.persona_cliente_id),
+	ser.servicio_nombre as NombreServicio,
+	sum(ped.pedido_precio) as Precio
+from persona per
+inner join cliente cli on per.persona_id=cli.persona_cliente_id
+inner join pedido ped on cli.persona_cliente_id=ped.persona_cliente_id
+inner join servicio ser on ped.servicio_id=ser.servicio_id
+group by per.persona_id;
+
+EJERCICIO 3
+
+Consultar le fecha en que los conductores realizaron determinados servicios
+
+select per.persona_id as IDconductor,
+	per.persona_nombre as NombreConductor,
+	per.persona_apellido as ApellidoConductor,
+	count(ped.persona_conductor_id) as Pedido,
+	ser.servicio_nombre as NomServicio,
+	ped.pedido_date as Fecha
+from persona per
+inner join conductor con on per.persona_id=con.persona_conductor_id
+inner join pedido ped on con.persona_conductor_id=ped.persona_conductor_id
+inner join servicio ser on ped.servicio_id=ser.servicio_id
+WHERE strftime('%Y', pedido_date)
+GROUP BY per.persona_id;
+
+EJERCICIO 4
+
+Consultar en que fecha y lugar se realizo el pedido de un servicio
+mostrar los siguientes datos, id, nombre, apellido del conducto, el nombre
+del pedido y el id del lugar.
+
+select per.persona_id as IDconductor,
+	per.persona_nombre as NombreConductor,
+	per.persona_apellido as ApellidoConductor,
+	ser.servicio_nombre as NomPedido,
+	ped.pedido_date as Fecha,
+	des.destino_id as Lugar
+from persona per
+inner join conductor con on per.persona_id=con.persona_conductor_id
+inner join pedido ped on con.persona_conductor_id=ped.persona_conductor_id
+inner join servicio ser on ped.servicio_id=ser.servicio_id
+inner join tarifa tar on ser.destino_id=tar.destino_id
+inner join destino des on tar.destino_id=des.destino_id
+WHERE strftime('%Y', pedido_date)
+GROUP BY ped.servicio_id;
+
+
+************************************************************************
+
+EJERCICIO 5
+
+Realizar una consulta en donde muestre el promedio mayor a 2 del precio 
+de los clientes que han realizado los distintos servicios.
+
+select per.persona_id as Cliente,
+	per.persona_nombre as Nombre,
+	ser.servicio_nombre as NombreServicio,
+	sum(ped.pedido_precio) as Precio
+from persona per
+inner join cliente cli on per.persona_id=cli.persona_cliente_id
+inner join pedido ped on cli.persona_cliente_id=ped.persona_cliente_id
+inner join servicio ser on ped.servicio_id=ser.servicio_id
+WHERE ped.pedido_precio>2
+group by per.persona_id;
+
+EJERCICIO 6
+
+Realizar una consulta en donde una persona realizo un pedido en determinada
+fecha se necesita conocer el Id, nombre del cliente y de la misma manera el id,
+nombre del conductor, la placa del vehiculo, el color, el precio del pedido 
+y el nombre de servicio.
+
+SELECT per.persona_id,
+	per.persona_nombre,
+	per.persona_apellido,
+	veh.vehiculo_placa as placa,
+	sum(ped.pedido_precio) as Precio,
+	ser.servicio_nombre as NomPedido,
+	ped.pedido_date as Fecha
+from persona per
+inner join conductor con on per.persona_id=con.persona_conductor_id
+inner join vehiculo veh on con.persona_conductor_id=veh.persona_conductor_id
+inner join pedido ped on con.persona_conductor_id=ped.persona_conductor_id
+inner join servicio ser on ped.servicio_id=ser.servicio_id
+Having sum(ped.pedido_precio)>=2;
+
+EJERCICIO 7
+
+Realizar una consulta en donde se calclula la suma de los precios es decir el total
+de cada pedido generado por el cliente usando usando having usando
+el operado COUNT.
+
+select ped.persona_cliente_id,
+	ped.servicio_id as IDServicio,
+	ser.servicio_nombre as NomServicio,
+	COUNT(ped.pedido_precio) as Total
+from persona per
+inner join cliente cli on per.persona_id=cli.persona_cliente_id
+inner join pedido ped on cli.persona_cliente_id=ped.persona_cliente_id
+inner join servicio ser on ped.servicio_id=ser.servicio_id
+group by ped.servicio_id
+having COUNT(ped.pedido_precio)>=1.50; 
+
+EJERCICIO 8
+
+Realizar una consulta en donde se calclula la suma de los precios es decir el total
+de cada pedido generado por el cliente usando usando having mayor usando 
+el operador SUM.
+
+select ped.persona_cliente_id as IDCliente,
+	per.persona_nombre as NomCliente,
+	ped.servicio_id as IDServicio,
+	ser.servicio_nombre as NomServicio,
+	SUM(ped.pedido_precio) as Total
+from persona per
+inner join cliente cli on per.persona_id=cli.persona_cliente_id
+inner join pedido ped on cli.persona_cliente_id=ped.persona_cliente_id
+inner join servicio ser on ped.servicio_id=ser.servicio_id
+group by ped.servicio_id
+having SUM(ped.pedido_precio)>=1.50;
+
+EJERCICIO 9
+
+Realizar una consulta en donde se calclula la suma de los precios es decir el total
+de cada pedido generado por el cliente y el promedio del total usando usando having,
+el operador SUM y AVG
+
+select ped.persona_cliente_id as IDCliente,
+	per.persona_nombre as NomCliente,
+	ped.servicio_id as IDServicio,
+	ser.servicio_nombre as NomServicio,
+	SUM(ped.pedido_precio) as Total,
+	avg(ped.pedido_precio) as Promedio
+from persona per
+inner join cliente cli on per.persona_id=cli.persona_cliente_id
+inner join pedido ped on cli.persona_cliente_id=ped.persona_cliente_id
+inner join servicio ser on ped.servicio_id=ser.servicio_id
+group by ped.servicio_id
+having avg(ped.pedido_precio)>=4.50;
+
+EJERCICIO 10
+
+Realizar una consulta en donde del modulo de ubicacion de extraiga la informacion de un cliente
+es decir la provincia, canton, parroquia y ver el servicio que adquirio en determinada fecha 
+con el precio. La tabla a mostrar debe contener los siguientes datos, Id, nombre y apellido 
+del cliente, nombre de la provincia, canton, parroquia, el precio del pedido, el nombre y la fecha.
+
+select per.persona_id as IDCliente,
+	per.persona_nombre as NombreCL,
+	per.persona_apellido as ApellidoCl,
+	pr.provincia_nombre as Provincia,
+	can.canton_nombre as Canton,
+	par.parroquia_nombre as Parroquia,
+	ped.pedido_precio as PrecioPedido,
+	ser.servicio_nombre as NomPedido,
+	ped.pedido_date as FechaPedido
+from coordenadas coor
+inner join provincia pr on coor.provincia_id=pr.provincia_id
+inner join canton can on pr.provincia_id=can.canton_id
+inner join parroquia par on can.canton_id=par.parroquia_id
+inner join persona per on pr.provincia_id=per.direccion
+inner join cliente cl on per.persona_id=cl.persona_cliente_id
+inner join pedido ped on cl.persona_cliente_id=ped.persona_cliente_id
+inner join servicio ser on ped.servicio_id=ser.servicio_id
+GROUP BY persona_id
+Limit 3;
+
